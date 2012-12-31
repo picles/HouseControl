@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="10dip"
+    android:background="#DDDDDD"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textViewHouseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_house_name" />
+
+    <EditText
+        android:id="@+id/editTextHouseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewHouseName"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="15dp"
+        android:ems="10" />
+
+    <NumberPicker
+        android:id="@+id/numberPickerNrFloors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/textViewNrFloors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/numberPickerNrFloors"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="18dp"
+        android:text="@string/label_floor_number" />
+
+    <Button
+        android:id="@+id/ButtonNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/numberPickerNrFloors"
+        android:layout_below="@+id/numberPickerNrFloors"
+        android:layout_marginTop="40dp"
+        android:text="@string/button_next" />
+ 
+</RelativeLayout>
