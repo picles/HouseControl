@@ -26,7 +26,6 @@ public class CreateHouse extends Activity {
         
         mEditTextHouseName = (EditText)findViewById(R.id.editTextHouseName);
         
-        
         mNumberPickerNrFloors = (NumberPicker) findViewById(R.id.numberPickerNrFloors); 
         mNumberPickerNrFloors.setMaxValue(3);
         mNumberPickerNrFloors.setMinValue(1);

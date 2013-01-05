@@ -39,8 +39,8 @@ public class LoginActivity extends Activity {
 	private UserLoginTask mAuthTask = null;
 
 	// Values for email and password at the time of the login attempt.
-	private String mEmail;
-	private String mPassword;
+	private String mEmail = "user@foo.com";
+	private String mPassword = "123123";
 
 	// UI references.
 	private EditText mEmailView;
@@ -56,7 +56,7 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 
 		// Set up the login form.
-		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
+		//mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
 
@@ -108,7 +108,7 @@ public class LoginActivity extends Activity {
 
 		// Store values at the time of the login attempt.
 		mEmail = mEmailView.getText().toString();
-		mPassword = mPasswordView.getText().toString();
+		//mPassword = mPasswordView.getText().toString();
 
 		boolean cancel = false;
 		View focusView = null;
@@ -199,12 +199,13 @@ public class LoginActivity extends Activity {
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
 
+			/*
 			try {
 				// Simulate network access.
-				Thread.sleep(2000);
+				//Thread.sleep(2000); nms
 			} catch (InterruptedException e) {
 				return false;
-			}
+			}*/
 
 			for (String credential : DUMMY_CREDENTIALS) {
 				String[] pieces = credential.split(":");

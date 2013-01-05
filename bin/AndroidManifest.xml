@@ -9,6 +9,7 @@
         android:targetSdkVersion="15" />
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -42,14 +43,13 @@
         </activity>
         <activity
             android:name="com.example.housecontrol.FloorCreator"
-            android:label="@string/title_activity_floor_creator"
-            android:parentActivityName="com.example.housecontrol.CreateHouse" >
+            android:label="@string/title_activity_floor_creator" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.housecontrol.CreateHouse" />
         </activity>
         <activity
-            android:name=".DefineFloor"
+            android:name="com.example.housecontrol.DefineFloor"
             android:label="@string/title_activity_define_floor" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,13 +58,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConfigureFloor"
+            android:name="com.example.housecontrol.ConfigureFloorActivity"
             android:label="@string/title_activity_configure_floor" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

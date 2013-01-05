@@ -2,6 +2,8 @@ package com.example.housecontrol;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,12 +19,15 @@ import android.widget.RelativeLayout;
 
 public class FloorCreator extends Activity {
 
+	public static final String mSNrFloorKey = "numberOfFloorsKey";
+	public static final String mSFirstFloorKey = "keyFirstFloor";
+	public static final String mSSecondFloorKey = "keySecondFloor";
+	public static final String mSThirdFloorKey = "keyThirdFloor";
+	public static final String mSFloorsKey = "keyFloors";
+	
 	private RelativeLayout m_lSecondFloor;
 	private RelativeLayout m_lThirdFloor;
 	private Button mButtonNext;
-	public static String mSFirstFloorKey = "keyFirstFloor";
-	public static String mSSecondFloorKey = "keySecondFloor";
-	public static String mSThirdFloorKey = "keyThirdFloor";
 	private int m_iNrFloors;
 	
 	@Override
@@ -54,7 +59,8 @@ public class FloorCreator extends Activity {
 			public void onClick(View arg0) {
 				
 				Bundle params = new Bundle();
-				
+				params.putInt(mSNrFloorKey, m_iNrFloors);
+
 				//primeiro andar
 				EditText sPNrSala1 = (EditText) findViewById(R.id.txbPrNrSala);
 				EditText sPNrQuarto1 = (EditText) findViewById(R.id.txbPrNrQuarto);
@@ -68,7 +74,7 @@ public class FloorCreator extends Activity {
 				clsFloor1.setWCNb(Integer.parseInt(sPNrWC1.getText().toString()));
 				clsFloor1.setBedroomNb(Integer.parseInt(sPNrQuarto1.getText().toString()));
 				params.putSerializable(mSFirstFloorKey, clsFloor1);
-				
+						
 				if(m_iNrFloors >= 2)
 				{
 					//segundo Andar
@@ -84,7 +90,6 @@ public class FloorCreator extends Activity {
 					clsFloor2.setWCNb(Integer.parseInt(sSNrWC2.getText().toString()));
 					clsFloor2.setBedroomNb(Integer.parseInt(sSNrQuarto2.getText().toString()));
 					params.putSerializable(mSSecondFloorKey, clsFloor2);
-					
 					if(m_iNrFloors > 2)
 					{
 						// terceiro andar
@@ -99,11 +104,11 @@ public class FloorCreator extends Activity {
 						clsFloor3.setKitchenNb(Integer.parseInt(sTNrCozinha3.getText().toString()));
 						clsFloor3.setWCNb(Integer.parseInt(sTNrWC3.getText().toString()));
 						clsFloor3.setBedroomNb(Integer.parseInt(sTNrQuarto3.getText().toString()));
-						params.putSerializable(mSThirdFloorKey, clsFloor2);
+						params.putSerializable(mSThirdFloorKey, clsFloor2);		
 					}
-				}
+				}	
 				
-				Intent floorCreator = new Intent(FloorCreator.this, ConfigureFloor.class);
+				Intent floorCreator = new Intent(FloorCreator.this, ConfigureFloorActivity.class);
 				floorCreator.putExtras(params);
 				startActivity(floorCreator);
 			}
