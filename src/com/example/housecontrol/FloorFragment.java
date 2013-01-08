@@ -113,14 +113,16 @@ public class FloorFragment extends Fragment {
      public boolean onContextItemSelected(MenuItem item) {
     	 Intent roomIntent = null;
     	 switch (item.getItemId()) {
-             case R.id.oppCom:            	 
-            	 //roomIntent = new Intent(FloorFragment.this, EquipmentCommActivity.class);
-            	 roomIntent= new Intent();
-                 return true;
-             case R.id.oppEd:
+             case R.id.oppCom:  
             	 roomIntent = new Intent();
+            	 roomIntent.setClass(getActivity(), EquipmentCommActivity.class);  	 
+                 break;
+             case R.id.oppEd:
+            	 //roomIntent = new Intent();
             	 //roomIntent = new Intent(getApplicationContext(), EditRoomActivity.class);
-                 return true;
+                 break;
+             default:
+            	 return super.onContextItemSelected(item);
          }
     	 
     	 if(roomIntent != null)

@@ -75,6 +75,9 @@
         <activity
             android:name="com.example.housecontrol.EquipmentCommActivity"
             android:label="@string/title_activity_equipment_comm" >
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
     </application>
 
