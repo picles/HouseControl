@@ -11,12 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class ConfigureFloorActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -88,7 +83,6 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 		return true;
 	}
 
-	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 		// When the given tab is selected, switch to the corresponding page in
@@ -96,12 +90,11 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
 
-	@Override
 	public void onTabUnselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}
 
-	@Override
+	
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}

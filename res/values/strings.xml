@@ -25,11 +25,14 @@
     <string name="title_section3">Section 3</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section1">Section 1</string>
-
     <string name="bedroom_name">Quarto</string>
     <string name="livingroom_name">Sala</string>
     <string name="kitchen_name">Cozinha</string>
     <string name="wc_name">WC</string>
-    
-    
+    <string name="oppEd">Editar items da divisão</string>
+    <string name="oppCom">Comunicar com equipamentos definidos</string>
+    <string name="title_activity_list_house">ListHouseActivity</string>
+    <string name="title_activity_edit_room">EditRoomActivity</string>
+    <string name="title_activity_equipment_comm">EquipmentCommActivity</string>
+
 </resources>

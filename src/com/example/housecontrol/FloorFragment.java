@@ -2,15 +2,19 @@ package com.example.housecontrol;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,7 +34,7 @@ public class FloorFragment extends Fragment {
 
 	public FloorFragment() {
 		// TODO Auto-generated constructor stub
-	
+		
 	}
 
 	@Override
@@ -50,7 +54,6 @@ public class FloorFragment extends Fragment {
 		
 		listview.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				
@@ -58,6 +61,7 @@ public class FloorFragment extends Fragment {
 			}
 		});
 		
+		registerForContextMenu(listview);
 		
 		return view;
 	}
@@ -96,4 +100,32 @@ public class FloorFragment extends Fragment {
 		ret = array.toArray(ret);
 		return ret;
 	}
+
+	 @Override
+     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+         super.onCreateContextMenu(menu, v, menuInfo);
+         
+         menu.add(Menu.NONE, R.id.oppEd, Menu.NONE, R.string.oppEd);
+         menu.add(Menu.NONE, R.id.oppCom, Menu.NONE, R.string.oppCom);
+     }
+
+     @Override
+     public boolean onContextItemSelected(MenuItem item) {
+    	 Intent roomIntent = null;
+    	 switch (item.getItemId()) {
+             case R.id.oppCom:            	 
+            	 //roomIntent = new Intent(FloorFragment.this, EquipmentCommActivity.class);
+            	 roomIntent= new Intent();
+                 return true;
+             case R.id.oppEd:
+            	 roomIntent = new Intent();
+            	 //roomIntent = new Intent(getApplicationContext(), EditRoomActivity.class);
+                 return true;
+         }
+    	 
+    	 if(roomIntent != null)
+    		 startActivity(roomIntent);
+    	 
+         return super.onContextItemSelected(item);
+     }
 }

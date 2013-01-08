@@ -61,6 +61,21 @@
             android:name="com.example.housecontrol.ConfigureFloorActivity"
             android:label="@string/title_activity_configure_floor" >
         </activity>
+        <activity
+            android:name="com.example.housecontrol.ListHouseActivity"
+            android:label="@string/title_activity_list_house" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.housecontrol.LoginActivity" />
+        </activity>
+        <activity
+            android:name="com.example.housecontrol.EditRoomActivity"
+            android:label="@string/title_activity_edit_room" >
+        </activity>
+        <activity
+            android:name="com.example.housecontrol.EquipmentCommActivity"
+            android:label="@string/title_activity_equipment_comm" >
+        </activity>
     </application>
 
 </manifest>

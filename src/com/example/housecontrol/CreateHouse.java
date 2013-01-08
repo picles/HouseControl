@@ -37,23 +37,31 @@ public class CreateHouse extends Activity {
 				
 				if (text == null || text.isEmpty() == true) {
 					//
-					Toast notification = Toast.makeText(getApplicationContext(), "NO!", Toast.LENGTH_SHORT);
+					Toast notification = Toast.makeText(getApplicationContext(), "Necessário inserir descrição", Toast.LENGTH_SHORT);
 					notification.show();
 					return;
 				}
 			
-				Bundle params = new Bundle();
-				params.putString(kHouseName, text);
-				params.putInt(kNrFloors, mNumberPickerNrFloors.getValue());
+				HouseDBAdapter houseadapter = new HouseDBAdapter(getApplicationContext());
 				
-				Intent floorCreator = new Intent(CreateHouse.this, FloorCreator.class);
-				floorCreator.putExtras(params);
-				startActivity(floorCreator);
+				if(houseadapter.InsertLayout(text))
+				{
+					Bundle params = new Bundle();
+					params.putString(kHouseName, text);
+					params.putInt(kNrFloors, mNumberPickerNrFloors.getValue());
+					
+					Intent floorCreator = new Intent(CreateHouse.this, FloorCreator.class);
+					floorCreator.putExtras(params);
+					startActivity(floorCreator);
+				}
+				else
+				{
+					Toast notification = Toast.makeText(getApplicationContext(), "Erro ao inserir o layout. Por favor tente de novo", Toast.LENGTH_SHORT);
+					notification.show();
+					return;
+				}
 			}
         });
-        
-    
-        
     }
 
     @Override

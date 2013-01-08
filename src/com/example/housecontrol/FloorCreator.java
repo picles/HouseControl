@@ -104,7 +104,7 @@ public class FloorCreator extends Activity {
 						clsFloor3.setKitchenNb(Integer.parseInt(sTNrCozinha3.getText().toString()));
 						clsFloor3.setWCNb(Integer.parseInt(sTNrWC3.getText().toString()));
 						clsFloor3.setBedroomNb(Integer.parseInt(sTNrQuarto3.getText().toString()));
-						params.putSerializable(mSThirdFloorKey, clsFloor2);		
+						params.putSerializable(mSThirdFloorKey, clsFloor3);		
 					}
 				}	
 				
