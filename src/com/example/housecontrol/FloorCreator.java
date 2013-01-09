@@ -1,10 +1,5 @@
 package com.example.housecontrol;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Vector;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class FloorCreator extends Activity {
 
@@ -29,7 +25,8 @@ public class FloorCreator extends Activity {
 	private RelativeLayout m_lThirdFloor;
 	private Button mButtonNext;
 	private int m_iNrFloors;
-	
+	private long m_lFloorID=-1;
+	private HouseDBAdapter houseadapter = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,13 +51,19 @@ public class FloorCreator extends Activity {
 				m_lThirdFloor.setVisibility(View.VISIBLE);
 		}
 		
-		mButtonNext = (Button)findViewById(R.id.btn_NextFloorForm);
-        mButtonNext.setOnClickListener(new OnClickListener() {
+		houseadapter = new HouseDBAdapter(getApplicationContext());
+		long lLayoutID = myIntent.getLongExtra(CreateHouse.kHouseID, -1);		
+		m_lFloorID = houseadapter.InsertFloor(lLayoutID, m_iNrFloors);
+		
+		if(m_lFloorID > 0)
+		{
+			mButtonNext = (Button)findViewById(R.id.btn_NextFloorForm);
+			mButtonNext.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 				
 				Bundle params = new Bundle();
 				params.putInt(mSNrFloorKey, m_iNrFloors);
-
+				params.putLong(CreateHouse.kFloorID, m_lFloorID);
 				//primeiro andar
 				EditText sPNrSala1 = (EditText) findViewById(R.id.txbPrNrSala);
 				EditText sPNrQuarto1 = (EditText) findViewById(R.id.txbPrNrQuarto);
@@ -74,7 +77,8 @@ public class FloorCreator extends Activity {
 				clsFloor1.setWCNb(Integer.parseInt(sPNrWC1.getText().toString()));
 				clsFloor1.setBedroomNb(Integer.parseInt(sPNrQuarto1.getText().toString()));
 				params.putSerializable(mSFirstFloorKey, clsFloor1);
-						
+				InsertRoomsinFloor(clsFloor1);
+				
 				if(m_iNrFloors >= 2)
 				{
 					//segundo Andar
@@ -90,6 +94,7 @@ public class FloorCreator extends Activity {
 					clsFloor2.setWCNb(Integer.parseInt(sSNrWC2.getText().toString()));
 					clsFloor2.setBedroomNb(Integer.parseInt(sSNrQuarto2.getText().toString()));
 					params.putSerializable(mSSecondFloorKey, clsFloor2);
+					InsertRoomsinFloor(clsFloor2);
 					if(m_iNrFloors > 2)
 					{
 						// terceiro andar
@@ -104,15 +109,23 @@ public class FloorCreator extends Activity {
 						clsFloor3.setKitchenNb(Integer.parseInt(sTNrCozinha3.getText().toString()));
 						clsFloor3.setWCNb(Integer.parseInt(sTNrWC3.getText().toString()));
 						clsFloor3.setBedroomNb(Integer.parseInt(sTNrQuarto3.getText().toString()));
-						params.putSerializable(mSThirdFloorKey, clsFloor3);		
+						params.putSerializable(mSThirdFloorKey, clsFloor3);
+						InsertRoomsinFloor(clsFloor3);
 					}
-				}	
-				
-				Intent floorCreator = new Intent(FloorCreator.this, ConfigureFloorActivity.class);
-				floorCreator.putExtras(params);
-				startActivity(floorCreator);
+				}				
+			    
+				// aqui guardo as divisões por andar
+				Intent ConfigureFloor = new Intent(FloorCreator.this, ConfigureFloorActivity.class);
+				ConfigureFloor.putExtras(params);
+				startActivity(ConfigureFloor);
 			}
         });
+		}
+		else
+		{
+			Toast notification = Toast.makeText(getApplicationContext(), "Erro ao inserir o andar, por favor reinicie a aplicação", Toast.LENGTH_SHORT);
+			notification.show();
+		}
 	}
 
 	
@@ -138,6 +151,44 @@ public class FloorCreator extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private boolean InsertRoomsinFloor(Floor clsFloor)
+	{
+		if(houseadapter == null)
+			houseadapter = new HouseDBAdapter(getApplicationContext());
+		
+		if(m_lFloorID<=0)
+			return false;
+		
+		String floorString;
+		int roomNr;
+		
+		for (int i=0; i< clsFloor.getBedroomNb(); ++i) {
+			floorString = getString(R.string.bedroom_name);
+			roomNr = i+1;
+			houseadapter.InsertRoom(m_lFloorID, clsFloor.getFloorNb(), floorString+" "+roomNr);
+		}
+		
+		for (int i=0; i< clsFloor.getKitchenNb(); ++i) {
+			floorString = getString(R.string.kitchen_name);
+			roomNr = i+1;
+			houseadapter.InsertRoom(m_lFloorID, clsFloor.getFloorNb(), floorString+" "+roomNr);
+		}
+		
+		for (int i=0; i< clsFloor.getLivingroomNb(); ++i) {
+			floorString = getString(R.string.livingroom_name);
+			roomNr = i+1;
+			houseadapter.InsertRoom(m_lFloorID, clsFloor.getFloorNb(), floorString+" "+roomNr);
+		}
+		
+		for (int i=0; i< clsFloor.getWCNb(); ++i) {
+			floorString = getString(R.string.wc_name);
+			roomNr = i+1;
+			houseadapter.InsertRoom(m_lFloorID, clsFloor.getFloorNb(), floorString+" "+roomNr);
+		}
+		
+		return true;
 	}
 
 }

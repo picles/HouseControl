@@ -4,11 +4,93 @@
     android:layout_height="match_parent"
     tools:context=".EditRoomActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+ 		<TextView
+            android:id="@+id/txtTitleRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtPrNrSala"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTitleRoom"
+            android:layout_marginTop="10dp"
+            android:text="@string/NrSalas"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/txbPrNrSala"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtTitleFloor1"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/txtPrNrSala"
+            android:ems="10"
+            android:inputType="number"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/txtPrNrQuarto"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtPrNrSala"
+            android:layout_marginTop="15dp"
+            android:text="@string/NrQuarto"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+             />
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/txbPrNrQuarto"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txbPrNrSala"
+            android:layout_toRightOf="@+id/txtPrNrQuarto"
+            android:ems="10"
+            android:inputType="number"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/txtPrNrCozinha"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtPrNrQuarto"
+            android:layout_marginTop="10dp"
+            android:text="@string/NrCozinha"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/txbPrNrCozinha"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txbPrNrQuarto"
+            android:layout_toRightOf="@+id/txtPrNrCozinha"
+            android:ems="10"
+            android:inputType="number"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/txtPrNrWC"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtPrNrCozinha"
+            android:layout_marginTop="15dp"
+            android:text="@string/NrWC"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/txbPrNrWC"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txbPrNrCozinha"
+            android:layout_toRightOf="@+id/txtPrNrWC"
+            android:ems="10"
+            android:inputType="number"
+            android:text="0" />
 
 </RelativeLayout>

@@ -19,60 +19,65 @@ public class HouseDBAdapter {
 	}
 	
 	// Insert Methods
-	public boolean InsertLayout(String LayoutName)
+	public long InsertLayout(String LayoutName)
 	{
+		long lRowID = -1;
+		
 		  try {
 			  SQLiteDatabase sqlite = dbHelper.getWritableDatabase();
 	            ContentValues initialValues = new ContentValues();
 	          //  initialValues.put(_ID, personId);
 	            initialValues.put("LayoutName", LayoutName);
-	            sqlite.insert("Layouts", null, initialValues);
+	            lRowID = sqlite.insert("Layouts", null, initialValues);
 
 	        } catch (SQLException sqlerror) {
 	            Log.v("Insert into table error", sqlerror.getMessage());
-	            return false;
+	            return lRowID;
 	        }
-	        return true;
+	        return lRowID;
 	}
 	
-	public boolean InsertFloor(int IdLayout, int FloorNumber)
+	public long InsertFloor(long IdLayout, int FloorNumber)
 	{
+		long lRowID = -1;
 		  try {
 	            SQLiteDatabase sqlite = dbHelper.getWritableDatabase();
 	            ContentValues initialValues = new ContentValues();
 	          //  initialValues.put(_ID, personId);
 	            initialValues.put("IdLayout", IdLayout);
 	            initialValues.put("FloorNumber", FloorNumber);
-	            sqlite.insert("Floors", null, initialValues);
+	            lRowID=sqlite.insert("Floors", null, initialValues);
 
 	        } catch (SQLException sqlerror) {
 	            Log.v("Insert into table error", sqlerror.getMessage());
-	            return false;
+	            return lRowID;
 	        }
-	        return true;
+	        return lRowID;
 	}
 	
-	public boolean InsertRoom(int IdFloor, int FloorNumber, String RoomName)
+	public long InsertRoom(long m_lFloorID, int FloorNumber, String RoomName)
 	{
+		long lRowID=-1;
 		  try {
 	            SQLiteDatabase sqlite = dbHelper.getWritableDatabase();
 	            ContentValues initialValues = new ContentValues();
 	          //  initialValues.put(_ID, personId);
-	            initialValues.put("IdFloor", IdFloor);
+	            initialValues.put("IdFloor", m_lFloorID);
 	            initialValues.put("FloorNumber", FloorNumber);
 	            initialValues.put("RoomName", RoomName);
-	            sqlite.insert("Rooms", null, initialValues);
+	            lRowID = sqlite.insert("Rooms", null, initialValues);
 
 	        } catch (SQLException sqlerror) {
 	            Log.v("Insert into table error", sqlerror.getMessage());
-	            return false;
+	            return lRowID;
 	        }
-	        return true;
+	        return lRowID;
 	}
 	
-	public boolean InsertEquipments(int IdRoom, int EquipmentType, 
+	public long InsertEquipments(int IdRoom, int EquipmentType, 
 			String EquipmentIP, int EquipmentPort)
 	{
+		long lRowID = -1;
 		  try {
 	            SQLiteDatabase sqlite = dbHelper.getWritableDatabase();
 	            ContentValues initialValues = new ContentValues();
@@ -81,13 +86,13 @@ public class HouseDBAdapter {
 	            initialValues.put("EquipmentType", EquipmentType);
 	            initialValues.put("EquipmentIP", EquipmentIP);
 	            initialValues.put("EquipmentPort", EquipmentPort);
-	            sqlite.insert("Equipments", null, initialValues);
+	            lRowID = sqlite.insert("Equipments", null, initialValues);
 
 	        } catch (SQLException sqlerror) {
 	            Log.v("Insert into table error", sqlerror.getMessage());
-	            return false;
+	            return lRowID;
 	        }
-	        return true;
+	        return lRowID;
 	}
 	
 	
@@ -101,6 +106,20 @@ public class HouseDBAdapter {
 	            crsr.moveToNext();
 	        }
 	        return house;
-	    }
-	
+	 }
+	 
+	 public ArrayList<Room> getRoomsbyFloorandFloorNb(long FloorID, int FloorNumber)
+	 {
+		  ArrayList<Room> rooms = new ArrayList<Room>();
+		  SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
+		  Cursor crsr = sqliteDB.rawQuery("SELECT * FROM Rooms WHERE IdFloor =" + FloorID + " AND FloorNumber = " + FloorNumber , null);
+	      crsr.moveToFirst();
+	      
+	      for (int i = 0; i < crsr.getCount(); i++){
+	      	rooms.add(new Room(crsr.getInt(0), crsr.getInt(2), crsr.getString(3) ));
+	          crsr.moveToNext();
+	      }
+	      
+	      return rooms;
+	 }
 }

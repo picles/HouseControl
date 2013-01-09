@@ -22,7 +22,7 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 	 * fragments for each of the sections. We use a
 	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
 	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
+	 * intensive, it may be best to switOch to a
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
@@ -31,7 +31,9 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-
+	
+	private long mFloorID = -1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,6 +41,7 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 		
 		Intent intent = getIntent();
 		LinkedList<Floor> floors = this.getFloorListFromIntent(intent);
+		mFloorID = intent.getLongExtra(CreateHouse.kFloorID, -1);
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -47,7 +50,7 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager(), floors);
+				getSupportFragmentManager(), floors, this.mFloorID);
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -128,10 +131,12 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 		
 		private LinkedList<Floor> mFloorsList;
+		private long mFloorID;
 		
-		public SectionsPagerAdapter(FragmentManager fm, LinkedList<Floor> aFloors) {
+		public SectionsPagerAdapter(FragmentManager fm, LinkedList<Floor> aFloors, long FloorID) {
 			super(fm);
 			this.mFloorsList = aFloors;
+			mFloorID = FloorID;
 		}
 
 		@Override
@@ -142,6 +147,7 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 			Fragment fragment = new FloorFragment();
 			Bundle args = new Bundle();
 			args.putSerializable(FloorFragment.kFloorKey, mFloorsList.get(position));
+			args.putLong(CreateHouse.kFloorID, this.mFloorID);
 			fragment.setArguments(args);
 			return fragment;
 		}
