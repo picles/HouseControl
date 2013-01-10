@@ -41,7 +41,7 @@ public class FloorCreator extends Activity {
 		m_lThirdFloor.setVisibility(View.GONE);
 		
 		Intent myIntent= getIntent(); // gets the previously created intent
-		m_iNrFloors = myIntent.getIntExtra(CreateHouse.kNrFloors, 1);
+		m_iNrFloors = myIntent.getIntExtra(ApplicationGlobals.kNrFloors, 1);
 		
 		if(m_iNrFloors >= 2)
 		{
@@ -52,7 +52,7 @@ public class FloorCreator extends Activity {
 		}
 		
 		houseadapter = new HouseDBAdapter(getApplicationContext());
-		long lLayoutID = myIntent.getLongExtra(CreateHouse.kHouseID, -1);		
+		long lLayoutID = myIntent.getLongExtra(ApplicationGlobals.kHouseID, -1);		
 		m_lFloorID = houseadapter.InsertFloor(lLayoutID, m_iNrFloors);
 		
 		if(m_lFloorID > 0)
@@ -63,7 +63,7 @@ public class FloorCreator extends Activity {
 				
 				Bundle params = new Bundle();
 				params.putInt(mSNrFloorKey, m_iNrFloors);
-				params.putLong(CreateHouse.kFloorID, m_lFloorID);
+				params.putLong(ApplicationGlobals.kFloorID, m_lFloorID);
 				//primeiro andar
 				EditText sPNrSala1 = (EditText) findViewById(R.id.txbPrNrSala);
 				EditText sPNrQuarto1 = (EditText) findViewById(R.id.txbPrNrQuarto);
@@ -116,6 +116,7 @@ public class FloorCreator extends Activity {
 			    
 				// aqui guardo as divisões por andar
 				Intent ConfigureFloor = new Intent(FloorCreator.this, ConfigureFloorActivity.class);
+				ConfigureFloor.putExtra(ApplicationGlobals.kShouldLoadDataFromDB, false);
 				ConfigureFloor.putExtras(params);
 				startActivity(ConfigureFloor);
 			}

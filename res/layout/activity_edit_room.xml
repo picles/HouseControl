@@ -13,84 +13,74 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtPrNrSala"
+            android:id="@+id/txtEstores"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtTitleRoom"
             android:layout_marginTop="10dp"
-            android:text="@string/NrSalas"
+            android:text="@string/NrEstores"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
-            android:id="@+id/txbPrNrSala"
+            android:id="@+id/txbEstores"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtTitleFloor1"
+            android:layout_below="@+id/txtTitleRoom"
             android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/txtPrNrSala"
+            android:layout_toRightOf="@+id/txtEstores"
             android:ems="10"
             android:inputType="number"
             android:text="0" />
 
         <TextView
-            android:id="@+id/txtPrNrQuarto"
+            android:id="@+id/txtPortas"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtPrNrSala"
+            android:layout_below="@+id/txtEstores"
             android:layout_marginTop="15dp"
-            android:text="@string/NrQuarto"
+            android:text="@string/NrPortas"
             android:textAppearance="?android:attr/textAppearanceLarge"
              />
 
         <EditText
             android:layout_marginTop="5dp"
-            android:id="@+id/txbPrNrQuarto"
+            android:id="@+id/txbPortas"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txbPrNrSala"
-            android:layout_toRightOf="@+id/txtPrNrQuarto"
+            android:layout_below="@+id/txbEstores"
+            android:layout_toRightOf="@+id/txtPortas"
             android:ems="10"
             android:inputType="number"
             android:text="0" />
 
         <TextView
-            android:id="@+id/txtPrNrCozinha"
+            android:id="@+id/txtLuzes"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtPrNrQuarto"
+            android:layout_below="@+id/txtPortas"
             android:layout_marginTop="10dp"
-            android:text="@string/NrCozinha"
+            android:text="@string/NrLuzes"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
             android:layout_marginTop="5dp"
-            android:id="@+id/txbPrNrCozinha"
+            android:id="@+id/txbLuzes"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txbPrNrQuarto"
-            android:layout_toRightOf="@+id/txtPrNrCozinha"
+            android:layout_below="@+id/txbPortas"
+            android:layout_toRightOf="@+id/txtLuzes"
             android:ems="10"
             android:inputType="number"
             android:text="0" />
 
-        <TextView
-            android:id="@+id/txtPrNrWC"
-            android:layout_width="150dp"
+        <Button
+            android:id="@+id/save_equipment_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtPrNrCozinha"
-            android:layout_marginTop="15dp"
-            android:text="@string/NrWC"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <EditText
-            android:layout_marginTop="5dp"
-            android:id="@+id/txbPrNrWC"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txbPrNrCozinha"
-            android:layout_toRightOf="@+id/txtPrNrWC"
-            android:ems="10"
-            android:inputType="number"
-            android:text="0" />
+            android:layout_below="@+id/txbLuzes"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="116dp"
+            android:text="Save Me!" />
 
 </RelativeLayout>

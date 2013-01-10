@@ -1,5 +1,6 @@
 package com.example.housecontrol;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import android.app.ActionBar;
@@ -12,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.widget.Toast;
 
 public class ConfigureFloorActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -33,6 +35,7 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 	ViewPager mViewPager;
 	
 	private long mFloorID = -1;
+	private boolean mShouldLoadDataFromDB = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +43,16 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_configure_floor_layout);
 		
 		Intent intent = getIntent();
-		LinkedList<Floor> floors = this.getFloorListFromIntent(intent);
-		mFloorID = intent.getLongExtra(CreateHouse.kFloorID, -1);
+		
+		this.mShouldLoadDataFromDB = intent.getBooleanExtra(ApplicationGlobals.kShouldLoadDataFromDB, false);
+
+		LinkedList<Floor> floors = null;
+		mFloorID = intent.getLongExtra(ApplicationGlobals.kFloorID, -1);
+		if (this.mShouldLoadDataFromDB == false) {
+			floors = this.getFloorListFromIntent(intent);
+		} else {
+			floors = this.getFloorListFromDB();
+		}
 		
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -119,7 +130,23 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 		if (floor != null) {
 			floors.add(floor);
 		}
-
+		return floors;
+	}
+	
+	private LinkedList<Floor> getFloorListFromDB()
+	{
+		LinkedList<Floor> floors = new LinkedList<Floor>();
+		HouseDBAdapter dbAdapter = new HouseDBAdapter(getApplicationContext());
+		int numberOfFloors = dbAdapter.getNumberofFloors(this.mFloorID);
+		for (int i=0; i<numberOfFloors; ++i) {
+			ArrayList<Room> floorArrayList = dbAdapter.getRoomsbyFloorandFloorNb(this.mFloorID, i+1);
+			Toast.makeText(getApplicationContext(),"NrRooms: "+floorArrayList.size(), Toast.LENGTH_SHORT).show();
+			Floor fl = new Floor();
+			fl.setBedroomNb(floorArrayList.size());
+			fl.setFloorNb(i+1);
+			floors.add(fl);
+		}
+		
 		return floors;
 	}
 	
@@ -144,12 +171,21 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new FloorFragment();
-			Bundle args = new Bundle();
-			args.putSerializable(FloorFragment.kFloorKey, mFloorsList.get(position));
-			args.putLong(CreateHouse.kFloorID, this.mFloorID);
-			fragment.setArguments(args);
-			return fragment;
+			if (mShouldLoadDataFromDB == false) {
+				Fragment fragment = new FloorFragment();
+				Bundle args = new Bundle();
+				args.putSerializable(FloorFragment.kFloorKey, mFloorsList.get(position));
+				args.putLong(ApplicationGlobals.kFloorID, this.mFloorID);
+				fragment.setArguments(args);
+				return fragment;
+			} else {
+				Fragment fragment = new ConfigureFloorFragment();
+				Bundle args = new Bundle();
+				args.putSerializable(FloorFragment.kFloorKey, mFloorsList.get(position));
+				args.putLong(ApplicationGlobals.kFloorID, this.mFloorID);
+				fragment.setArguments(args);
+				return fragment;
+			}
 		}
 
 		@Override

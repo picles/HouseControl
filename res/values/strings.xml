@@ -15,6 +15,9 @@
     <string name="NrSalas">Nrº Salas</string>
     <string name="NrQuarto">Nrº Quartos</string>
     <string name="NrCozinha">Nrº Cozinhas</string>
+    <string name="NrEstores">Nrº Estores</string>
+    <string name="NrLuzes">Nrº Luzes</string>
+    <string name="NrPortas">Nrº Portas</string>
     <string name="NrWC">Nrº WCs</string>
     <string name="Floor1">1º andar</string>
     <string name="Floor2">2º andar</string>
@@ -34,5 +37,6 @@
     <string name="title_activity_list_house">ListHouseActivity</string>
     <string name="title_activity_edit_room">EditRoomActivity</string>
     <string name="title_activity_equipment_comm">EquipmentCommActivity</string>
+    
 
 </resources>

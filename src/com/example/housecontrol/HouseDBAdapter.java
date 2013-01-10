@@ -74,7 +74,7 @@ public class HouseDBAdapter {
 	        return lRowID;
 	}
 	
-	public long InsertEquipments(int IdRoom, int EquipmentType, 
+	public long InsertEquipments(long IdRoom, int EquipmentType, 
 			String EquipmentIP, int EquipmentPort)
 	{
 		long lRowID = -1;
@@ -121,5 +121,32 @@ public class HouseDBAdapter {
 	      }
 	      
 	      return rooms;
+	 }
+	 
+	 public int getNumberofFloors(long FloorID)
+	 {
+		  int floornb=-1;
+		  SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
+		  Cursor crsr = sqliteDB.rawQuery("SELECT FloorNumber FROM Floors WHERE _id =" + FloorID , null);
+	      crsr.moveToFirst();
+	      
+	      for (int i = 0; i < crsr.getCount();){
+	      	return crsr.getInt(0);
+	      }
+	      
+	      return floornb;
+	 }
+	 
+	 public int getFloorId(long aHouseID)
+	 {
+		  SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
+		  Cursor crsr = sqliteDB.rawQuery("SELECT _id FROM Floors WHERE idLayout =" + aHouseID , null);
+	      crsr.moveToFirst();
+	      
+	      for (int i = 0; i < crsr.getCount();){
+	      	return crsr.getInt(0);
+	      }
+	      
+	      return -1;
 	 }
 }

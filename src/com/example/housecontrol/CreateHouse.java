@@ -12,12 +12,6 @@ import android.widget.NumberPicker;
 import android.widget.Toast;
 
 public class CreateHouse extends Activity {
-	public final static String kHouseName = "house_name";
-	public final static String kNrFloors = "nr_floors";
-	public final static String kHouseID = "HouseID";
-	public final static String kFloorID = "FloorID";
-	public final static String kRoomID = "RoomID";
-	public final static String kRoomName = "RoomName";
 	private EditText mEditTextHouseName;
 	private NumberPicker mNumberPickerNrFloors;
 	private Button mButtonNext;
@@ -52,9 +46,9 @@ public class CreateHouse extends Activity {
 				if(lHouseID > 0)
 				{
 					Bundle params = new Bundle();
-					params.putString(kHouseName, text);
-					params.putInt(kNrFloors, mNumberPickerNrFloors.getValue());
-					params.putLong(kHouseID, lHouseID);
+					params.putString(ApplicationGlobals.kHouseName, text);
+					params.putInt(ApplicationGlobals.kNrFloors, mNumberPickerNrFloors.getValue());
+					params.putLong(ApplicationGlobals.kHouseID, lHouseID);
 					Intent floorCreator = new Intent(CreateHouse.this, FloorCreator.class);
 					floorCreator.putExtras(params);
 					startActivity(floorCreator);
