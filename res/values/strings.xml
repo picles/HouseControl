@@ -37,6 +37,7 @@
     <string name="title_activity_list_house">ListHouseActivity</string>
     <string name="title_activity_edit_room">EditRoomActivity</string>
     <string name="title_activity_equipment_comm">EquipmentCommActivity</string>
-    
-
+    <string name="pref_ServerUrl">URL do servidor</string>
+	<string name="pref_default_IP">127.0.0.1</string>
+	 <string name="pref_header_Server">Configurações Servidor</string>
 </resources>
