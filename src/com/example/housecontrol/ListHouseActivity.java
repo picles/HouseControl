@@ -70,14 +70,16 @@ public class ListHouseActivity extends ListActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_list_house, menu);
 		
-		MenuItem addNewHouse = menu.add(0, 1, 0, "Add").setIcon(R.drawable.ic_action_search);
+		MenuItem addNewHouse = menu.add(0, 1, 0, "Add").setIcon(R.drawable.ic_menu_add);
+		MenuItem addSettings = menu.add(0, 2, 0, "Settings").setIcon(R.drawable.ic_action_settings);
 		addNewHouse.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		
+		addSettings.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = null;
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// This ID represents the Home or Up button. In the case of this
@@ -90,7 +92,11 @@ public class ListHouseActivity extends ListActivity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case 1:
-			Intent intent = new Intent(ListHouseActivity.this, CreateHouse.class);
+			intent = new Intent(ListHouseActivity.this, CreateHouse.class);
+			startActivity(intent);
+			return true;
+		case 2:
+			intent = new Intent(ListHouseActivity.this, HouseControlSettings.class);
 			startActivity(intent);
 			return true;
 		}

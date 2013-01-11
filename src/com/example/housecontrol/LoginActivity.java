@@ -226,7 +226,7 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
-            	Intent intent = new Intent(LoginActivity.this, InitialScreen.class);
+            	Intent intent = new Intent(LoginActivity.this, ListHouseActivity.class);
                 startActivity(intent);
 				finish();
 			} else {

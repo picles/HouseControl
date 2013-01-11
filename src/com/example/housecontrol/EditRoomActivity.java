@@ -43,7 +43,6 @@ public class EditRoomActivity extends Activity {
 		
 		this.mSaveButton = (Button)findViewById(R.id.save_equipment_button);
 		this.mSaveButton.setOnClickListener(new OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				HouseDBAdapter dbAdapter = new HouseDBAdapter(getApplicationContext());
 				if (mEstoreTxb.getText() != null) {
