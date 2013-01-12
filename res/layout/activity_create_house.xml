@@ -36,14 +36,12 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="18dp"
         android:text="@string/label_floor_number" />
-
+ 
     <Button
         android:id="@+id/ButtonNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/numberPickerNrFloors"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_below="@+id/numberPickerNrFloors"
         android:layout_marginTop="40dp"
-        android:text="@string/button_next" />
- 
+        android:text="@string/Next" />
 </RelativeLayout>

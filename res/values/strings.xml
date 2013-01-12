@@ -42,4 +42,7 @@
     <string name="lights_name">Luzes</string>
     <string name="doors_name">Portas</string>
 
+    <string name="pref_ServerUrl">URL do servidor</string>
+	<string name="pref_default_IP">127.0.0.1</string>
+	 <string name="pref_header_Server">Configurações Servidor</string>
 </resources>

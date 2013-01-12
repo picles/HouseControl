@@ -91,5 +91,4 @@
             android:label="@string/title_activity_control_equipment" >
         </activity>
     </application>
-
 </manifest>
