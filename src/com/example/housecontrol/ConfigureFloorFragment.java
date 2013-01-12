@@ -2,6 +2,7 @@ package com.example.housecontrol;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * A dummy fragment representing a section of the app, but that simply
@@ -43,8 +43,6 @@ public class ConfigureFloorFragment extends Fragment {
 		this.mFloor = (Floor)getArguments().getSerializable(kFloorKey);
 		this.mFloorID = getArguments().getLong(ApplicationGlobals.kFloorID);
 		
-		//Toast.makeText(getActivity().getApplicationContext(), "floorId: "+this.mFloorID+" floorNr: "+this.mFloor.getFloorNb(), Toast.LENGTH_SHORT).show();
-		
 		HouseDBAdapter houseadapter = new HouseDBAdapter(getActivity().getApplicationContext());
 		ArrayList<Room> rooms = houseadapter.getRoomsbyFloorandFloorNb(this.mFloorID, mFloor.getFloorNb());
 		
@@ -58,15 +56,14 @@ public class ConfigureFloorFragment extends Fragment {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				
-				/*
 				Room r = (Room)listadapter.getItem(arg2);
 				Bundle params = new Bundle();
 				params.putLong(ApplicationGlobals.kRoomID, r.getId());
-				params.putString(ApplicationGlobals.kRoomName, r.getRoomName());
-				Intent roomIntent = new Intent();
-           	 	roomIntent.setClass(getActivity(), EditRoomActivity.class); 
-           	 	startActivityForResult(roomIntent, kEditRoomResultActivityResultCode );
-           	 	*/
+				Intent controlEquipmentsIntent = new Intent();
+				controlEquipmentsIntent.putExtras(params);
+				
+				controlEquipmentsIntent.setClass(getActivity(), ControlEquipmentsActivity.class); 
+           	 	startActivity(controlEquipmentsIntent);	
 			}
 		});
 		

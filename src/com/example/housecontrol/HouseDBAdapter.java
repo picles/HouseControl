@@ -108,6 +108,16 @@ public class HouseDBAdapter {
 	        return house;
 	 }
 	 
+	 public Room getRoomById (final long aId) {
+	        SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
+	        Cursor crsr = sqliteDB.rawQuery("SELECT * FROM Rooms where _id = "+aId, null);
+	        crsr.moveToFirst();
+	        Room r = new Room(crsr.getInt(0), crsr.getInt(2), crsr.getString(3));
+	        ArrayList<Equipment> equipments = this.getEquipmentsByRoomId(r.getId());
+	        r.setEquipmentsList(equipments);
+	        return r;
+	 }
+	 
 	 public ArrayList<Room> getRoomsbyFloorandFloorNb(long FloorID, int FloorNumber)
 	 {
 		  ArrayList<Room> rooms = new ArrayList<Room>();
@@ -116,11 +126,32 @@ public class HouseDBAdapter {
 	      crsr.moveToFirst();
 	      
 	      for (int i = 0; i < crsr.getCount(); i++){
-	      	rooms.add(new Room(crsr.getInt(0), crsr.getInt(2), crsr.getString(3) ));
+	    	  int roomId = crsr.getInt(0);
+	    	  Room room = new Room(roomId, crsr.getInt(2), crsr.getString(3) );
+	    	  ArrayList<Equipment> equipments = this.getEquipmentsByRoomId(roomId);
+	    	  room.setEquipmentsList(equipments);
+	    	  rooms.add(room);
 	          crsr.moveToNext();
 	      }
 	      
 	      return rooms;
+	 }
+	 
+	 public ArrayList<Equipment> getEquipmentsByRoomId(long aRoomId)
+	 {
+		  ArrayList<Equipment> equipments = new ArrayList<Equipment>();
+		  SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
+		  Cursor crsr = sqliteDB.rawQuery("SELECT * FROM Equipments WHERE idRoom = "+aRoomId, null);
+	      crsr.moveToFirst();
+    	  System.out.println("ZING! " +aRoomId );
+	      for (int i = 0; i < crsr.getCount(); i++){
+	    	  Equipment equipment = new Equipment(crsr.getInt(0), crsr.getInt(2), crsr.getString(3), crsr.getInt(4));
+	    	  System.out.println("Eq Id--> "+ crsr.getInt(0));
+	    	  equipments.add(equipment);
+	          crsr.moveToNext();
+	      }
+	      
+	      return equipments;	 
 	 }
 	 
 	 public int getNumberofFloors(long FloorID)

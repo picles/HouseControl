@@ -1,9 +1,17 @@
 package com.example.housecontrol;
 
-public class Room {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Room implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -961278434817353367L;
 	private int mId;
 	private int mFloorNumber;
 	private String mRoomName;
+	private ArrayList<Equipment> mEquipmentsList;
 	
 	public Room(int id, int FloorNumber, String RoomName) {
 		this.mId = id;
@@ -30,4 +38,15 @@ public class Room {
 	public int getFloorNumber() {
 		return this.mFloorNumber;
 	}
+	
+	public ArrayList<Equipment> getEquipmentsList()
+	{
+		return this.mEquipmentsList;
+	}
+	
+	public void setEquipmentsList(ArrayList<Equipment> aEquipmentsList)
+	{
+		this.mEquipmentsList = aEquipmentsList;
+	}
+	
 }

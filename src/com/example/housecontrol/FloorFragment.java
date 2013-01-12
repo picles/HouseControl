@@ -59,10 +59,12 @@ public class FloorFragment extends Fragment {
 					long arg3) {
 				
 				Room r = (Room)listadapter.getItem(arg2);
+				System.out.println("FloorFragmet R.ID: "+r.getId());
 				Bundle params = new Bundle();
 				params.putLong(ApplicationGlobals.kRoomID, r.getId());
 				params.putString(ApplicationGlobals.kRoomName, r.getRoomName());
 				Intent roomIntent = new Intent();
+				roomIntent.putExtras(params);
            	 	roomIntent.setClass(getActivity(), EditRoomActivity.class); 
            	 	startActivityForResult(roomIntent, kEditRoomResultActivityResultCode );
 			}

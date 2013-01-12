@@ -33,6 +33,7 @@ public class EditRoomActivity extends Activity {
 		
 		String roomTitle = myIntent.getStringExtra(ApplicationGlobals.kRoomName);
 		this.mRoomId = myIntent.getLongExtra(ApplicationGlobals.kRoomID, -1);
+		System.out.println("EditRoom GetId: "+this.mRoomId);
 		
 		TextView titleText = (TextView)findViewById(R.id.txtTitleRoom);
 		titleText.setText(roomTitle);

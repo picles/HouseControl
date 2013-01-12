@@ -37,6 +37,9 @@
     <string name="title_activity_list_house">ListHouseActivity</string>
     <string name="title_activity_edit_room">EditRoomActivity</string>
     <string name="title_activity_equipment_comm">EquipmentCommActivity</string>
-    
+    <string name="title_activity_control_equipment">ControlEquipmentActivity</string>
+    <string name="blinds_name">Estores</string>
+    <string name="lights_name">Luzes</string>
+    <string name="doors_name">Portas</string>
 
 </resources>
