@@ -10,7 +10,6 @@
     <string name="button_login">Login</string>
     <string name="label_house_name">House Name</string>
     <string name="label_floor_number">Number of floors</string>
-    <string name="button_next">Next:</string>
     <string name="title_activity_floor_creator">FloorCreator</string>
     <string name="NrSalas">Nrº Salas</string>
     <string name="NrQuarto">Nrº Quartos</string>
