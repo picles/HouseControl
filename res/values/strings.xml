@@ -3,15 +3,15 @@
 
     <string name="app_name">HouseControl</string>
     <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_login_scr">LoginScr</string>
-    <string name="title_activity_initial_screen">InitialScreen</string>
-    <string name="title_activity_create_house">CreateHouse</string>
+    <string name="menu_settings">Configurações</string>
+    <string name="title_activity_login_scr">Login</string>
+    <string name="title_activity_initial_screen">Inicio</string>
+    <string name="title_activity_create_house">Criar casa</string>
     <string name="button_login">Login</string>
-    <string name="label_house_name">House Name</string>
-    <string name="label_floor_number">Number of floors</string>
-    <string name="button_next">Next:</string>
-    <string name="title_activity_floor_creator">FloorCreator</string>
+    <string name="label_house_name">Nome da casa</string>
+    <string name="label_floor_number">Número de andares</string>
+    <string name="button_next">Next</string>
+    <string name="title_activity_floor_creator">Criar andares</string>
     <string name="NrSalas">Nrº Salas</string>
     <string name="NrQuarto">Nrº Quartos</string>
     <string name="NrCozinha">Nrº Cozinhas</string>
@@ -23,8 +23,8 @@
     <string name="Floor2">2º andar</string>
     <string name="Floor3">3º andar</string>
     <string name="Next">Seguinte</string>
-    <string name="title_activity_define_floor">DefineFloor</string>
-    <string name="title_activity_configure_floor">ConfigureFloor</string>
+    <string name="title_activity_define_floor">Definir andar</string>
+    <string name="title_activity_configure_floor">Configurar andares</string>
     <string name="title_section3">Section 3</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section1">Section 1</string>
@@ -34,15 +34,19 @@
     <string name="wc_name">WC</string>
     <string name="oppEd">Editar items da divisão</string>
     <string name="oppCom">Comunicar com equipamentos definidos</string>
-    <string name="title_activity_list_house">ListHouseActivity</string>
-    <string name="title_activity_edit_room">EditRoomActivity</string>
-    <string name="title_activity_equipment_comm">EquipmentCommActivity</string>
-    <string name="title_activity_control_equipment">ControlEquipmentActivity</string>
+    <string name="title_activity_list_house">Listar casas</string>
+    <string name="title_activity_edit_room">Editar divisões</string>
+    <string name="title_activity_equipment_comm">Comunicação com os equipamentos</string>
+    <string name="title_activity_control_equipment">Controlo de equipamentos</string>
     <string name="blinds_name">Estores</string>
     <string name="lights_name">Luzes</string>
     <string name="doors_name">Portas</string>
-
     <string name="pref_ServerUrl">URL do servidor</string>
-	<string name="pref_default_IP">127.0.0.1</string>
-	 <string name="pref_header_Server">Configurações Servidor</string>
-</resources>
+    <string name="pref_default_IP">127.0.0.1</string>
+    <string name="pref_header_Server">Configurações Servidor</string>
+    <string name="title_activity_configure_equip_ip">Configurar equipamento</string>
+	<string name="Port">Porta</string>
+	<string name="IP">IP</string>
+	<string name="Save">Gravar</string>
+	<string name="Edit">Editar</string>
+</resources>0
