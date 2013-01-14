@@ -9,7 +9,8 @@ public class ApplicationGlobals {
 	public final static String kFloorID = "FloorID";
 	public final static String kRoomID = "RoomID";
 	public final static String kRoomName = "RoomName";
-
+	public final static String kEquipmentID = "EquipmentID";
+	
 	public final static int kEstoresDBKey = 0;
 	public final static int kLuzesDBKey = 1;
 	public final static int kPortasDBKey = 2;

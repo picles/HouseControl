@@ -180,4 +180,44 @@ public class HouseDBAdapter {
 	      
 	      return -1;
 	 }
+	 
+	 public boolean updateFloor(long IdEquipment, String IP, int Port)
+	 {
+		 SQLiteDatabase sqlite = dbHelper.getWritableDatabase();
+		 ContentValues args = new ContentValues();
+		 args.put("EquipmentIP", IP);
+		 args.put("EquipmentPort", Port);
+		 int irows = sqlite.update("Equipments", args,   "_id =" + IdEquipment, null);
+		 
+		 if(irows <=0)
+			 return false;
+		 else
+			 return true;
+	 }
+	 
+	 public String getEquipmentIPById(long IdEquipment)
+	 {
+		 SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
+		  Cursor crsr = sqliteDB.rawQuery("SELECT EquipmentIP FROM Equipments WHERE _id =" + IdEquipment , null);
+	      crsr.moveToFirst();
+	      
+	      for (int i = 0; i < crsr.getCount();){
+	      	return crsr.getString(0);
+	      }
+	      
+	      return "";
+	 }
+	 
+	 public int getEquipmentPortById(long IdEquipment)
+	 {
+		 SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
+		  Cursor crsr = sqliteDB.rawQuery("SELECT EquipmentPort FROM Equipments WHERE _id =" + IdEquipment , null);
+	      crsr.moveToFirst();
+	      
+	      for (int i = 0; i < crsr.getCount();){
+	      	return crsr.getInt(0);
+	      }
+	      
+	      return 0;
+	 }
 }

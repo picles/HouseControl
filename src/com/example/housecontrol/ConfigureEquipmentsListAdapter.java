@@ -74,7 +74,6 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 		 holder.txtEquipmentTitle.setText(getEquipmentNameFromType(equipment.getEquipmentType()));
 		 holder.toogleButton.setOnClickListener(new OnClickListener() {
 			
-			@Override
 			public void onClick(View view) {
 				ToggleButton b = (ToggleButton)view;
 				Toast.makeText(getContext(), "Whoop!"+equipment.getEquipmentId()+" -- "+b.isChecked(), Toast.LENGTH_SHORT).show();

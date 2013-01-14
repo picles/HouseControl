@@ -17,9 +17,6 @@ public class ControlEquipmentsActivity extends Activity {
 		HouseDBAdapter dbAdapter = new HouseDBAdapter(getApplicationContext());
 		this.mRoom = dbAdapter.getRoomById(roomId);
 		
-		System.out.println("Room: "+this.mRoom);
-		System.out.println("Equipments: "+this.mRoom.getEquipmentsList());
-		
 		ConfigureEquipmentsListAdapter adapter = new ConfigureEquipmentsListAdapter(this, R.layout.listitem_control_equipment, this.mRoom.getEquipmentsList());	
 		ListView list = (ListView)findViewById(R.id.listView_equipments);
 		list.setAdapter(adapter);
