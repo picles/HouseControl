@@ -1,6 +1,10 @@
 package com.example.housecontrol;
 
 public class ApplicationGlobals {
+	public static String SERVER_IP = null;
+	
+	public final static String kPreferencesFile = "preferences_key";
+	public final static String kPreferencesServerSettingsKey = "server_settings";
 	
 	public final static String kRoomIntentKey = "room_intent_key";
 	public final static String kHouseName = "house_name";

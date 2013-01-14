@@ -3,9 +3,11 @@ package com.example.housecontrol;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,13 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -30,7 +36,11 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 	private int mLayoutResourceId;
 	private ArrayList<Equipment> mEquipmentsArrayList;
 	
-	private String mIp = "http://192.168.1.65:9090/AndroidCommService/EquipmentState";
+	private final String kGetEquipmentStateRelativeUrl = "/AndroidCommService/EquipmentState";
+	private final String kChangeEquipmentStateRelativeUrl = "/AndroidCommService/ChangeEquipmentState";
+	
+	private final String kEquipmentStateJSONKey = "EquipmentStateResult";
+	private final String kChangeEquipmentStateJSONKey = "ChangeEquipmentStateResult";
 
 	public ConfigureEquipmentsListAdapter(Context context, int resource, List<Equipment> objects) {
 		super(context, resource, objects);
@@ -38,7 +48,6 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 		this.mContext = context;
 		this.mLayoutResourceId = resource;
 		this.mEquipmentsArrayList = (ArrayList<Equipment>) objects;
-		System.out.println("-> "+this.mEquipmentsArrayList);
 	}
 	
 	
@@ -47,56 +56,43 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 	{
 		View row = convertView;
 		EquipmentHolder holder = null;
-		
-		 if(row == null) {
-			 LayoutInflater inflater = ((Activity) this.mContext).getLayoutInflater();
-			 row = inflater.inflate(mLayoutResourceId, parent, false);
+		if(row == null) {
+			LayoutInflater inflater = ((Activity) this.mContext).getLayoutInflater();
+			row = inflater.inflate(mLayoutResourceId, parent, false);
 		            
-			 holder = new EquipmentHolder();
-			 holder.toogleButton = (ToggleButton)row.findViewById(R.id.toggleButton);
-			 holder.txtEquipmentTitle = (TextView)row.findViewById(R.id.txtEquipmentName); 
-			 row.setTag(holder);
-		 } else {
-			 holder = (EquipmentHolder)row.getTag();
-		 }
-	        
-		 final Equipment equipment = this.mEquipmentsArrayList.get(position);
-
-		 URL url = null;
-		 try {
-			url = new URL(mIp);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			holder = new EquipmentHolder();
+			holder.mToogleButton = (ToggleButton)row.findViewById(R.id.toggleButton);
+			holder.mTxtEquipmentTitle = (TextView)row.findViewById(R.id.txtEquipmentName); 
+			row.setTag(holder);
+		} else {
+			holder = (EquipmentHolder)row.getTag();
 		}
-		 new RequestStateAsyncTask().execute(url);
+	        
+		final Equipment equipment = this.mEquipmentsArrayList.get(position);
+		holder.mEquipmentIp = equipment.getIp();
+		
+		new RequestStateAsyncTask().execute(holder);
 		 
-		 holder.txtEquipmentTitle.setText(getEquipmentNameFromType(equipment.getEquipmentType()));
-		 holder.toogleButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
+		final EquipmentHolder param = holder;
+		holder.mTxtEquipmentTitle.setText(getEquipmentNameFromType(equipment.getEquipmentType()));
+		holder.mToogleButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				ToggleButton b = (ToggleButton)view;
-				Toast.makeText(getContext(), "Whoop!"+equipment.getEquipmentId()+" -- "+b.isChecked(), Toast.LENGTH_SHORT).show();
-				
+				new RequestStateChangeAsyncTask().execute(param);
 			}
 		});
-	        
-		 return row;
+		
+		return row;
 	}
 	
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return this.mEquipmentsArrayList.size();
 	}
 
 	public Equipment getItem(int arg0) {
-		// TODO Auto-generated method stub
 		return this.mEquipmentsArrayList.get(arg0);
 	}
 
 	public long getItemId(int arg0) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	
@@ -116,17 +112,29 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 
 	static class EquipmentHolder
     {
-        ToggleButton toogleButton;
-        TextView txtEquipmentTitle;
+        private ToggleButton mToogleButton;
+        private TextView mTxtEquipmentTitle;
+        private String mEquipmentIp;
     }
 	
 	
-	private class RequestStateAsyncTask extends AsyncTask<URL, Integer, Integer>
+	private class RequestStateAsyncTask extends AsyncTask<EquipmentHolder, Integer, Boolean>
 	{
-
+		private ToggleButton mButtonToUpdate;
+		
 		@Override
-		protected Integer doInBackground(URL... params) {
-			URL url = params[0];
+		protected Boolean doInBackground(EquipmentHolder... params) {
+			String urlString = "http://"+ApplicationGlobals.SERVER_IP+kGetEquipmentStateRelativeUrl;
+			EquipmentHolder eqHolder = params[0];
+			this.mButtonToUpdate = eqHolder.mToogleButton;
+			URL url;
+			try {
+				url = new URL(urlString);
+			} catch (MalformedURLException e1) {
+				e1.printStackTrace();
+				return null;
+			}
+			
 			URLConnection jc;
 			BufferedReader reader;
 			JSONObject jsonResponse = null;
@@ -137,48 +145,94 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 				jsonResponse = new JSONObject(line);
 				reader.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return null;
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return null;
 			}
 			
-			System.out.println("Async: "+jsonResponse);
-			return 0;
-		}
-		
-		@Override
-		protected void onPostExecute(Integer aResult) {
+			System.out.println("Response state: "+jsonResponse);
 			
+			Boolean equipmentStateResult = false;
+			try {
+				equipmentStateResult = jsonResponse.getBoolean(kEquipmentStateJSONKey);
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+			return equipmentStateResult;
 		}
 		
-	}
-	
-	private class RequestStateChangeAsyncTask extends AsyncTask<URL, Integer, Integer>
-	{
-
 		@Override
-		protected Integer doInBackground(URL... urls) {
-			URL url = urls[0];
-			return 0;
-	     }
-
-	     protected void onProgressUpdate(Integer... progress) {
-	         //setProgressPercent(progress[0]);
-	     }
-
-	     protected void onPostExecute(Long result) {
-	         //showDialog("Downloaded " + result + " bytes");
-	     }
-		
+		protected void onPostExecute(Boolean aResult) {
+			if (aResult != null && aResult == true) {
+				this.mButtonToUpdate.setChecked(true);
+			} else {
+				this.mButtonToUpdate.setChecked(false);
+			}
+			return;
+		}
 	}
 	
+	private class RequestStateChangeAsyncTask extends AsyncTask<EquipmentHolder, Integer, Boolean>
+	{		
+		@Override
+		protected Boolean doInBackground(EquipmentHolder... params) {
+			EquipmentHolder eqHolder = params[0];
+			String urlString = "http://"+ApplicationGlobals.SERVER_IP+kChangeEquipmentStateRelativeUrl;
+			String query = null;
+			try {
+				query = String.format("?IP=%s", URLEncoder.encode(eqHolder.mEquipmentIp, "UTF-8"));
+			} catch (UnsupportedEncodingException e2) {
+				return null;
+			}
+			
+			URL url;
+			try {
+				url = new URL(urlString+query);
+			} catch (MalformedURLException e1) {
+				e1.printStackTrace();
+				return null;
+			}
+			
+			URLConnection jc;
+			BufferedReader reader;
+			JSONObject jsonResponse = null;
+			try {
+				jc = url.openConnection();
+				reader = new BufferedReader(new InputStreamReader(jc.getInputStream()));
+				String line = reader.readLine();
+				jsonResponse = new JSONObject(line);
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return null;
+			} 
+			
+			Boolean equipmentStateResult = false;
+			try {
+				equipmentStateResult = jsonResponse.getBoolean(kChangeEquipmentStateJSONKey);
+			} catch (JSONException e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+			return equipmentStateResult;
+	}
 	
-	
-	
-	
-
+		@Override
+		protected void onPostExecute(Boolean aResult) {
+			if (aResult != null && aResult == true) {
+				Toast.makeText(mContext, "SUCCESS!!", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(mContext, "FAILED!!", Toast.LENGTH_SHORT).show();
+			}
+			return;
+		}
+	}
 }

@@ -5,7 +5,7 @@
     tools:context=".ControlEquipmentActivity" >
 
     <ListView
-        android:id="@+id/listView_equipments"
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
