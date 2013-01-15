@@ -124,7 +124,7 @@ public class FloorCreator extends Activity {
 		}
 		else
 		{
-			Toast notification = Toast.makeText(getApplicationContext(), "Erro ao inserir o andar, por favor reinicie a aplicação", Toast.LENGTH_SHORT);
+			Toast notification = Toast.makeText(getApplicationContext(), "Erro ao inserir o andar, por favor reinicie a aplicacao", Toast.LENGTH_SHORT);
 			notification.show();
 		}
 	}

@@ -49,4 +49,9 @@
 	<string name="IP">IP</string>
 	<string name="Save">Gravar</string>
 	<string name="Edit">Editar</string>
-</resources>0
+	<string name="please_config_equipment">Por favor edite o equipamento primeiro</string>
+	<string name="success">Sucesso!</string>
+	<string name="equipment_changed_successfully">Estado do equipamento alterado com sucesso</string>
+	<string name="equipment_changed_failed">Alteração do estado do equipamento falhou. P.F. tente mais tarde</string>
+	<string name="needs_description">Necessario inserir uma descricao</string>
+</resources>

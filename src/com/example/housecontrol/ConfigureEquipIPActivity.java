@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class ConfigureEquipIPActivity extends Activity {
 
@@ -26,17 +27,21 @@ public class ConfigureEquipIPActivity extends Activity {
 		Intent myIntent= getIntent(); // gets the previously created intent
 		mEquipmentID = myIntent.getLongExtra(ApplicationGlobals.kEquipmentID, -1);
 		
-		mbtnSave = (Button)findViewById(R.id.ButtonNext);
+		mbtnSave = (Button)findViewById(R.id.btnSave);
 		mEquipmentIP = (EditText)findViewById(R.id.txbIP);
 		mEquipmentPort = (EditText)findViewById(R.id.txbPort);
 		dbAdapter = new HouseDBAdapter(getApplicationContext());
 		mEquipmentIP.setText(dbAdapter.getEquipmentIPById(mEquipmentID));
-		mEquipmentPort.setText(dbAdapter.getEquipmentPortById(mEquipmentID));
+		
+		mEquipmentPort.setText(""+dbAdapter.getEquipmentPortById(mEquipmentID));
 		
 		mbtnSave.setOnClickListener(new OnClickListener() {
-			public void onClick(View arg0) {
-				
-				dbAdapter.updateFloor(mEquipmentID, mEquipmentIP.getText().toString(), Integer.getInteger(mEquipmentPort.getText().toString(), 0));
+			public void onClick(View arg0) {	
+				dbAdapter.updateEquipment(mEquipmentID, mEquipmentIP.getText().toString(), Integer.getInteger(mEquipmentPort.getText().toString(), 0));
+				Toast.makeText(getApplicationContext(), R.string.success, Toast.LENGTH_SHORT).show();
+				Intent returnIntent = new Intent();
+				setResult(RESULT_OK, returnIntent);        
+				finish();
 			}
         });
         

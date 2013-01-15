@@ -34,7 +34,7 @@ public class CreateHouse extends Activity {
 				
 				if (text == null || text.isEmpty() == true) {
 					//
-					Toast notification = Toast.makeText(getApplicationContext(), "Necessário inserir descrição", Toast.LENGTH_SHORT);
+					Toast notification = Toast.makeText(getApplicationContext(), R.string.needs_description, Toast.LENGTH_SHORT);
 					notification.show();
 					return;
 				}

@@ -14,17 +14,20 @@ import android.widget.ListView;
 
 public class ControlEquipmentsActivity extends Activity{
 
+	public static final int kEditEquipmentIntentKey = 1;
+	
 	private Room mRoom;
 	private ListView mListView;
 	private ConfigureEquipmentsListAdapter mListAdapter;
+	private long mRoomId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_control_equipment);
-		long roomId = getIntent().getLongExtra(ApplicationGlobals.kRoomID, -1);
+		mRoomId = getIntent().getLongExtra(ApplicationGlobals.kRoomID, -1);
 		HouseDBAdapter dbAdapter = new HouseDBAdapter(getApplicationContext());
-		this.mRoom = dbAdapter.getRoomById(roomId);
+		this.mRoom = dbAdapter.getRoomById(mRoomId);
 		
 		this.mListAdapter = new ConfigureEquipmentsListAdapter(this, R.layout.listitem_control_equipment, this.mRoom.getEquipmentsList());	
 		this.mListView = (ListView)findViewById(R.id.list);
@@ -32,6 +35,7 @@ public class ControlEquipmentsActivity extends Activity{
 		
 		registerForContextMenu(mListView);	
 	}
+	
 	
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
@@ -46,9 +50,10 @@ public class ControlEquipmentsActivity extends Activity{
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item.getMenuInfo();
 		Equipment eq = this.mListAdapter.getItem(menuInfo.position);
-		//Intent intent = new Intent(this, cls)
-		
-		return false;
+		Intent intent = new Intent(this, ConfigureEquipIPActivity.class);
+		intent.putExtra(ApplicationGlobals.kEquipmentID, eq.getEquipmentId());
+		startActivityForResult(intent, kEditEquipmentIntentKey);
+		return true;
 	}
 
 	@Override
@@ -56,5 +61,21 @@ public class ControlEquipmentsActivity extends Activity{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_control_equipment, menu);
 		return true;
+	}
+	
+	@Override
+	protected void onActivityResult (int requestCode, int resultCode, Intent data)
+	{
+		switch (requestCode) {
+		case kEditEquipmentIntentKey:
+			HouseDBAdapter dbAdapter = new HouseDBAdapter(getApplicationContext());
+			this.mRoom = dbAdapter.getRoomById(this.mRoomId);
+			this.mListAdapter.setEquipments(this.mRoom.getEquipmentsList());
+			this.mListAdapter.notifyDataSetChanged();
+			break;
+
+		default:
+			break;
+		}
 	}
 }

@@ -29,6 +29,7 @@ public class HouseDBAdapter {
 	          //  initialValues.put(_ID, personId);
 	            initialValues.put("LayoutName", LayoutName);
 	            lRowID = sqlite.insert("Layouts", null, initialValues);
+	            sqlite.close();
 
 	        } catch (SQLException sqlerror) {
 	            Log.v("Insert into table error", sqlerror.getMessage());
@@ -47,7 +48,7 @@ public class HouseDBAdapter {
 	            initialValues.put("IdLayout", IdLayout);
 	            initialValues.put("FloorNumber", FloorNumber);
 	            lRowID=sqlite.insert("Floors", null, initialValues);
-
+	            sqlite.close();
 	        } catch (SQLException sqlerror) {
 	            Log.v("Insert into table error", sqlerror.getMessage());
 	            return lRowID;
@@ -66,7 +67,7 @@ public class HouseDBAdapter {
 	            initialValues.put("FloorNumber", FloorNumber);
 	            initialValues.put("RoomName", RoomName);
 	            lRowID = sqlite.insert("Rooms", null, initialValues);
-
+	            sqlite.close();
 	        } catch (SQLException sqlerror) {
 	            Log.v("Insert into table error", sqlerror.getMessage());
 	            return lRowID;
@@ -87,6 +88,7 @@ public class HouseDBAdapter {
 	            initialValues.put("EquipmentIP", EquipmentIP);
 	            initialValues.put("EquipmentPort", EquipmentPort);
 	            lRowID = sqlite.insert("Equipments", null, initialValues);
+	            sqlite.close();
 
 	        } catch (SQLException sqlerror) {
 	            Log.v("Insert into table error", sqlerror.getMessage());
@@ -105,6 +107,8 @@ public class HouseDBAdapter {
 	        	house.add(new House(crsr.getInt(0), crsr.getString(1)));
 	            crsr.moveToNext();
 	        }
+	        crsr.close();
+	        sqliteDB.close();
 	        return house;
 	 }
 	 
@@ -115,6 +119,8 @@ public class HouseDBAdapter {
 	        Room r = new Room(crsr.getInt(0), crsr.getInt(2), crsr.getString(3));
 	        ArrayList<Equipment> equipments = this.getEquipmentsByRoomId(r.getId());
 	        r.setEquipmentsList(equipments);
+	        crsr.close();
+	        sqliteDB.close();
 	        return r;
 	 }
 	 
@@ -133,7 +139,8 @@ public class HouseDBAdapter {
 	    	  rooms.add(room);
 	          crsr.moveToNext();
 	      }
-	      
+	      crsr.close();
+	      sqliteDB.close();
 	      return rooms;
 	 }
 	 
@@ -150,7 +157,8 @@ public class HouseDBAdapter {
 	    	  equipments.add(equipment);
 	          crsr.moveToNext();
 	      }
-	      
+	      crsr.close();
+	      sqliteDB.close();
 	      return equipments;	 
 	 }
 	 
@@ -160,35 +168,32 @@ public class HouseDBAdapter {
 		  SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
 		  Cursor crsr = sqliteDB.rawQuery("SELECT FloorNumber FROM Floors WHERE _id =" + FloorID , null);
 	      crsr.moveToFirst();
-	      
-	      for (int i = 0; i < crsr.getCount();){
-	      	return crsr.getInt(0);
-	      }
-	      
+	      floornb = crsr.getInt(0);
+	      crsr.close();
+	      sqliteDB.close();
 	      return floornb;
 	 }
 	 
 	 public int getFloorId(long aHouseID)
 	 {
-		  SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
-		  Cursor crsr = sqliteDB.rawQuery("SELECT _id FROM Floors WHERE idLayout =" + aHouseID , null);
-	      crsr.moveToFirst();
-	      
-	      for (int i = 0; i < crsr.getCount();){
-	      	return crsr.getInt(0);
-	      }
-	      
-	      return -1;
+		 int ret = -1;
+		 SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
+		 Cursor crsr = sqliteDB.rawQuery("SELECT _id FROM Floors WHERE idLayout =" + aHouseID , null);
+		 crsr.moveToFirst(); 
+		 ret = crsr.getInt(0);
+		 crsr.close();
+		 sqliteDB.close();
+		 return ret;
 	 }
 	 
-	 public boolean updateFloor(long IdEquipment, String IP, int Port)
+	 public boolean updateEquipment(long IdEquipment, String IP, int Port)
 	 {
 		 SQLiteDatabase sqlite = dbHelper.getWritableDatabase();
 		 ContentValues args = new ContentValues();
 		 args.put("EquipmentIP", IP);
 		 args.put("EquipmentPort", Port);
 		 int irows = sqlite.update("Equipments", args,   "_id =" + IdEquipment, null);
-		 
+		 sqlite.close();
 		 if(irows <=0)
 			 return false;
 		 else
@@ -197,27 +202,27 @@ public class HouseDBAdapter {
 	 
 	 public String getEquipmentIPById(long IdEquipment)
 	 {
+		 String ret = "";
 		 SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
-		  Cursor crsr = sqliteDB.rawQuery("SELECT EquipmentIP FROM Equipments WHERE _id =" + IdEquipment , null);
-	      crsr.moveToFirst();
+		 Cursor crsr = sqliteDB.rawQuery("SELECT EquipmentIP FROM Equipments WHERE _id =" + IdEquipment , null);
+		 crsr.moveToFirst();
 	      
-	      for (int i = 0; i < crsr.getCount();){
-	      	return crsr.getString(0);
-	      }
+		 ret = crsr.getString(0);
+		 crsr.close();
+		 sqliteDB.close();
 	      
-	      return "";
+		 return ret;
 	 }
 	 
 	 public int getEquipmentPortById(long IdEquipment)
 	 {
+		 int ret = 0;
 		 SQLiteDatabase sqliteDB = dbHelper.getReadableDatabase();
-		  Cursor crsr = sqliteDB.rawQuery("SELECT EquipmentPort FROM Equipments WHERE _id =" + IdEquipment , null);
-	      crsr.moveToFirst();
-	      
-	      for (int i = 0; i < crsr.getCount();){
-	      	return crsr.getInt(0);
-	      }
-	      
-	      return 0;
+		 Cursor crsr = sqliteDB.rawQuery("SELECT EquipmentPort FROM Equipments WHERE _id =" + IdEquipment , null);
+		 crsr.moveToFirst();
+		 ret = crsr.getInt(0);
+		 crsr.close();
+		 sqliteDB.close();
+		 return ret;
 	 }
 }

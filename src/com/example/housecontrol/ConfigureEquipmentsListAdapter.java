@@ -17,13 +17,9 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -50,6 +46,11 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 		this.mEquipmentsArrayList = (ArrayList<Equipment>) objects;
 	}
 	
+	public void setEquipments(final ArrayList<Equipment> aArrayList)
+	{
+		this.mEquipmentsArrayList = aArrayList;
+	}
+	
 	
 	@Override
 	public View getView (int position, View convertView, ViewGroup parent) 
@@ -74,10 +75,16 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 		new RequestStateAsyncTask().execute(holder);
 		 
 		final EquipmentHolder param = holder;
+		
 		holder.mTxtEquipmentTitle.setText(getEquipmentNameFromType(equipment.getEquipmentType()));
 		holder.mToogleButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				new RequestStateChangeAsyncTask().execute(param);
+				if (equipment.getIp() != null && equipment.getIp().length() > 1) {
+					new RequestStateChangeAsyncTask().execute(param);
+				} else {
+					Toast.makeText(mContext, R.string.please_config_equipment, Toast.LENGTH_SHORT).show();
+					param.mToogleButton.setChecked(!param.mToogleButton.isChecked());
+				}
 			}
 		});
 		
@@ -152,8 +159,6 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 				return null;
 			}
 			
-			System.out.println("Response state: "+jsonResponse);
-			
 			Boolean equipmentStateResult = false;
 			try {
 				equipmentStateResult = jsonResponse.getBoolean(kEquipmentStateJSONKey);
@@ -221,16 +226,15 @@ public class ConfigureEquipmentsListAdapter extends ArrayAdapter<Equipment> {
 				e.printStackTrace();
 				return null;
 			}
-			
 			return equipmentStateResult;
 	}
 	
 		@Override
 		protected void onPostExecute(Boolean aResult) {
 			if (aResult != null && aResult == true) {
-				Toast.makeText(mContext, "SUCCESS!!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.equipment_changed_successfully, Toast.LENGTH_SHORT).show();
 			} else {
-				Toast.makeText(mContext, "FAILED!!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, R.string.equipment_changed_failed, Toast.LENGTH_SHORT).show();
 			}
 			return;
 		}

@@ -65,7 +65,7 @@ public class EditRoomActivity extends Activity {
 					}
 				}
 				
-				Toast.makeText(getApplicationContext(), "Yey, saved!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), R.string.success, Toast.LENGTH_SHORT).show();
 				finish();
 			}
 		});

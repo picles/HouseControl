@@ -167,7 +167,6 @@ public class ConfigureFloorActivity extends FragmentActivity implements
 		int numberOfFloors = dbAdapter.getNumberofFloors(this.mFloorID);
 		for (int i=0; i<numberOfFloors; ++i) {
 			ArrayList<Room> floorArrayList = dbAdapter.getRoomsbyFloorandFloorNb(this.mFloorID, i+1);
-			Toast.makeText(getApplicationContext(),"NrRooms: "+floorArrayList.size(), Toast.LENGTH_SHORT).show();
 			Floor fl = new Floor();
 			fl.setBedroomNb(floorArrayList.size());
 			fl.setFloorNb(i+1);

@@ -2,23 +2,23 @@ package com.example.housecontrol;
 
 public class Equipment {
 	
-	private int mEquipmentId;
+	private long mEquipmentId;
 	private int mEquipmentType;
 	private String mIp;
 	private int mPort;
 	
-	public Equipment(final int aEquipmentId, final int aEquipmentType, final String aIp, final int aPort ) {
+	public Equipment(final long aEquipmentId, final int aEquipmentType, final String aIp, final int aPort ) {
 		this.mEquipmentId = aEquipmentId;
 		this.mEquipmentType = aEquipmentType;
 		this.mIp = aIp;
 		this.mPort = aPort;
 	}
 
-	public int getEquipmentId() {
+	public long getEquipmentId() {
 		return mEquipmentId;
 	}
 
-	public void setEquipmentId(final int aEquipmentId) {
+	public void setEquipmentId(final long aEquipmentId) {
 		this.mEquipmentId = aEquipmentId;
 	}
 
