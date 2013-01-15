@@ -21,27 +21,16 @@
             android:windowSoftInputMode="adjustResize|stateVisible" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.housecontrol.InitialScreen"
-            android:label="@string/title_activity_initial_screen" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
+        
         <activity
             android:name="com.example.housecontrol.CreateHouse"
             android:label="@string/title_activity_create_house" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.housecontrol.ListHouseActivity" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.housecontrol.FloorCreator"
@@ -53,9 +42,6 @@
         <activity
             android:name="com.example.housecontrol.DefineFloor"
             android:label="@string/title_activity_define_floor" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.housecontrol.ConfigureFloorActivity"
@@ -75,9 +61,6 @@
         <activity
             android:name="com.example.housecontrol.EquipmentCommActivity"
             android:label="@string/title_activity_equipment_comm" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.housecontrol.HouseControlSettings"

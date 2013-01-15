@@ -46,8 +46,8 @@ private final List<Room> items;
         }
 
         // Set the text of the row
-        TextView txtId = (TextView) itemView.findViewById(R.id.RoomId);
-        txtId.setText(Integer.toString(row.getId()));
+        //TextView txtId = (TextView) itemView.findViewById(R.id.RoomId);
+        //txtId.setText(Integer.toString(row.getId()));
         
         TextView firstName = (TextView) itemView.findViewById(R.id.RoomName);
         firstName.setText(row.getRoomName());

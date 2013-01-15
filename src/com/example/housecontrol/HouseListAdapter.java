@@ -61,8 +61,8 @@ public class HouseListAdapter extends BaseAdapter {
         }
 
         // Set the text of the row
-        TextView txtId = (TextView) itemView.findViewById(R.id.houseId);
-        txtId.setText(Integer.toString(row.getId()));
+        //TextView txtId = (TextView) itemView.findViewById(R.id.houseId);
+        //txtId.setText(Integer.toString(row.getId()));
         
         TextView firstName = (TextView) itemView.findViewById(R.id.houseName);
         firstName.setText(row.getHouseName());

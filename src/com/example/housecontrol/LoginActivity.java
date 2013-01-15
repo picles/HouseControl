@@ -57,7 +57,7 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 
 		// Set up the login form.
-		//mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
+		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
 
@@ -109,7 +109,7 @@ public class LoginActivity extends Activity {
 
 		// Store values at the time of the login attempt.
 		mEmail = mEmailView.getText().toString();
-		//mPassword = mPasswordView.getText().toString();
+		mPassword = mPasswordView.getText().toString();
 
 		boolean cancel = false;
 		View focusView = null;
